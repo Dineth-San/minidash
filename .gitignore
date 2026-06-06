@@ -1,0 +1,16 @@
+# dependencies
+node_modules/
+
+# backend
+backend/db/minidash.db
+backend/db/*.db-journal
+
+# expo / react native
+frontend/.expo/
+frontend/dist/
+frontend/web-build/
+frontend/npm-debug.*
+
+# os / editor
+.DS_Store
+*.log
