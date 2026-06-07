@@ -17,9 +17,16 @@
 const express = require("express");
 const router = express.Router();
 
-// TODO Member #1: replace this placeholder with your real handler.
+const { getProfile } = require("../db/queries.js");
+
 router.get("/", (req, res) => {
-  res.status(501).json({ error: "Member #1 endpoint not implemented yet" });
+  try {
+    const data = getProfile();
+    res.json(data);
+  } catch (err) {
+    console.error("Profile route error:", err);
+    res.status(500).json({ error: "Failed to load profile" });
+  }
 });
 
 module.exports = router;

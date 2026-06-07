@@ -23,7 +23,7 @@
 // guidelines/04-running-the-project.md for the full walkthrough.
 // ============================================================
 
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "http://172.20.10.11:3000";
 
 // A tiny wrapper around fetch() for simple GET + JSON requests.
 // Returns the parsed JSON body, or throws on a network/HTTP error so your
