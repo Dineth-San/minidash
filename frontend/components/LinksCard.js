@@ -16,17 +16,46 @@
 // REFERENCE: frontend/components/QuoteCard.js
 // ============================================================
 
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable, Linking } from "react-native";
+import { useState, useEffect } from "react";
+import {get} from "../api/client";
+
 
 export default function LinksCard() {
-  // TODO Member #9: build this card. Placeholder below keeps the app running.
+  const[data,setData] = useState(null);
+  const [loading,setLoading] = useState(true);
+  const [error,setError] =useState(null);
+
+  useEffect(() => {
+    get("/api/links") 
+    .then(setData)
+    .catch(() =>setError ("Could not load links"))
+    .finally (() => setLoading(false));
+  },[]);
+  
+  if (loading) return <View style={styles.card}><Text>Loading...</Text></View>;
+  if (error) return <View style={styles.card}><Text>{error}</Text></View>;
+
   return (
-    <View style={styles.placeholder}>
-      <Text>Member #9: build me 👋</Text>
+    <View style={styles.card}>
+      <Text style ={styles.title}>Links</Text>
+      {data.map(item => (
+        <Pressable
+          key={item.id}
+          onPress={() => Linking.openURL(item.url)}
+          style={styles.link}
+        >
+          <Text style={styles.linkText}>{item.label}</Text>
+        </Pressable>
+      ))}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  placeholder: { padding: 16, margin: 8, backgroundColor: "#eee", borderRadius: 12 },
+  card: { padding: 16, margin: 8, backgroundColor: "#eee", borderRadius: 12 },
+  title: { fontSize: 18, fontWeight: "bold", marginBottom: 8 },
+  link: {paddingVertical: 8 , borderBottomWidth: 1, borderBottomColor: "red"},
+  linkText:{ color:"black", fontSize:14},
+  
 });

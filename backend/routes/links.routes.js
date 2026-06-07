@@ -15,11 +15,17 @@
 // ============================================================
 
 const express = require("express");
+const {getLinks} = require("../db/queries.js");
 const router = express.Router();
 
 // TODO Member #9: replace this placeholder with your real handler.
 router.get("/", (req, res) => {
-  res.status(501).json({ error: "Member #9 endpoint not implemented yet" });
+  try{
+    const data =getLinks();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({error:"Could not load links"});
+  }
 });
 
 module.exports = router;
