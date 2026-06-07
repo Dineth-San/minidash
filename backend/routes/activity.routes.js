@@ -15,11 +15,18 @@
 // ============================================================
 
 const express = require("express");
+const {getActivity} = require("../db/queries.js");
+
 const router = express.Router();
 
 // TODO Member #10: replace this placeholder with your real handler.
 router.get("/", (req, res) => {
-  res.status(501).json({ error: "Member #10 endpoint not implemented yet" });
+  try{
+    const activity = getActivity();
+    res.json(activity);
+  } catch (error){
+    res.status(500).json({error: "Failed to load activity data"})
+  }
 });
 
 module.exports = router;
