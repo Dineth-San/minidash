@@ -25,9 +25,19 @@
 const express = require("express");
 const router = express.Router();
 
+const {getTasks} = require("../db/queries")
+
 // TODO Member #4: replace this placeholder with your real handler.
 router.get("/", (req, res) => {
-  res.status(501).json({ error: "Member #4 endpoint not implemented yet" });
+  try{
+    const status = req.query || "";
+    const tasks = getTasks(status);
+    res.json(tasks);
+  }
+  catch(err){
+    console.error("GET /api/quote failed: ", err);
+    res.status(500).json({ error: "Could not load the tasks" });
+  }
 });
 
 module.exports = router;
